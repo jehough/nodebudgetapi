@@ -1,8 +1,13 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
+const express = require('express');
+const path = require('path');
+const env = require('dotenv').config({path: __dirname + '/.env'});
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-var logger = require('morgan');
+const logger = require('morgan');
+const mongoose = require('mongoose');
+const url = process.env['mongooseURL'];
+
+mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
