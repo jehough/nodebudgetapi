@@ -37,8 +37,8 @@ async function authenticate({email, password}){
 }
 
 async function changePassword({email, password, newPassword}){
-    const = await User.findOne({email});
-    const (user && bcrypt.compareSync(password, user.password)){
+    const user = await User.findOne({email});
+    if (user && bcrypt.compareSync(password, user.password)){
         user.password = newPassword
         user.save();
     }
