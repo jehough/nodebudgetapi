@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
 router.post('/', register)
 router.post('/login', authenticate)
 router.post('/changePassword', changePassword)
+router.get('/:id', show)
 
 
 /* callback functions*/
@@ -28,6 +29,10 @@ function authenticate (req, res, next) {
 function changePassword (req, res, next) {
   userController.changePassword(req.body)
     .then(user=> user ? res.json(user): res.status(400).json({message: 'Username or Password is incorrect.'}))
+}
+
+function show (req, res, next){
+  userController.show
 }
 
 module.exports = router;

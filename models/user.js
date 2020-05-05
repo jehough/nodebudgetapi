@@ -6,7 +6,11 @@ const userSchema = new Schema({
     password: {type: "string", required: true},
     role: "string",
     Created_on: {type: Date, default: Date.now},
-    Updated_on: {type: Date}
+    Updated_on: {type: Date},
+    budgets: [{
+        type: Schema.Types.ObjectID,
+        ref: "Budget"
+    }]
 })
 
 module.exports = mongoose.model("User", userSchema)
