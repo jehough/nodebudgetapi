@@ -26,5 +26,11 @@ async function createSeeds(){
 
 }
 
-
+async function printUser(){
+    await User.findOne({email: "sample@sample.org"}).populate('budgets')
+        .then(user => console.log(user))
+    await Budget.findOne({name: 'myBudget'}).populate("user")
+        .then(budget => console.log(budget))
+}
 createSeeds()
+printUser()
