@@ -5,7 +5,13 @@ const secret = process.env["jwtsecret"]
 
 module.exports = {
     create,
-    authenticate
+    authenticate,
+    index
+}
+
+async function index(){
+    const users = await User.find();
+    return users
 }
 
 async function create(userParam) {
@@ -16,13 +22,19 @@ async function create(userParam) {
     const user = new User(userParam);
 
     if (userParam.password){
-        user.hash = bcrypt.hashSync(userParam.password, 12);
+        user.password = bcrypt.hashSync(userParam.password, 12);
     }
     else {
         throw "Must include Password!"
     }
 
     await user.save();
+    const token = jwt.sign({sub: user.id}, secret);
+    
+    return {
+        ...user.toJSON(),
+        token
+    }
 }
 
 async function authenticate({email, password}){

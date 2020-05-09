@@ -4,7 +4,9 @@ const userController = require("../controllers/users")
 
 /* routers */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  userController.index()
+    .then(users => users? res.json(users):res.status(400).json({message: 'what?'}))
+    .catch(err => next(err))
 });
 router.post('/', register)
 router.post('/login', authenticate)
@@ -16,7 +18,7 @@ router.get('/:id', show)
 
 function register (req, res, next) {
   userController.create(req.body)
-    .then(() => res.json({}))
+    .then(user => user? res.json(user):res.status(400).json({message: 'Name is taken'}))
     .catch(err => next(err));
 }
 
