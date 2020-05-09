@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require("../controllers/users")
+const budgets = require('./budget')
 
 /* routers */
 router.get('/', function(req, res, next) {
@@ -11,7 +12,7 @@ router.get('/', function(req, res, next) {
 router.post('/', register)
 router.post('/login', authenticate)
 router.post('/changePassword', changePassword)
-router.get('/:id', show)
+router.use('/:userId/budgets', budgets)
 
 
 /* callback functions*/
@@ -33,8 +34,8 @@ function changePassword (req, res, next) {
     .then(user=> user ? res.json(user): res.status(400).json({message: 'Username or Password is incorrect.'}))
 }
 
-function show (req, res, next){
-  userController.show
-}
+
+
+
 
 module.exports = router;
