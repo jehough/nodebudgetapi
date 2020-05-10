@@ -9,13 +9,21 @@ module.exports = {
 }
 
 async function index(userId){
-    const user = await User.findOne({_id: userId}).populate('budgets');
+    const user = await User.findById(userId).populate('budgets')
     return user
 }
 
 
-async function create(userParam) {
+async function create(budgetParam, userId) {
     const budget = new Budget(budgetParam);
-    budget.save()
+    const user = await User.findByIdAndUpdate(
+        userId, 
+        {$push: {budgets: budget}},
+        {new: true, useFindAndModify: false}
+    )
+    await user.save()
+    budget.user = userId
+    await budget.save()
     return budget
 }
+

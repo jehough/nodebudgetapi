@@ -23,7 +23,7 @@ function show(req, res, next){
 }
 
 function create(req, res, next){
-    budgetController.create(req.body)
+    budgetController.create(req.body, req.params.userId)
         .then(budget => budget? res.json(budget):res.status(400).json({message: "Something Went Wrong"}))
         .catch(err => next(err))
 }

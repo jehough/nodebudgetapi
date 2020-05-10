@@ -10,7 +10,7 @@ module.exports = {
 }
 
 async function index(){
-    const users = await User.find();
+    const users = await User.find().populate('budgets');
     return users
 }
 
@@ -38,7 +38,8 @@ async function create(userParam) {
 }
 
 async function authenticate({email, password}){
-    const user = await User.findOne({email});
+    const user = await User.findOne({email}).select(+password);
+
     if (user && bcrypt.compareSync(password, user.password)){
         const token = jwt.sign({sub: user.id}, secret);
         return {
