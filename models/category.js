@@ -2,7 +2,7 @@ mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const categorySchema = new Schema ({
-    Title: {type: "string", required: true},
+    name: {type: "string", required: true},
     available: {type: 'Number', default: 0},
     budget: {
         type: Schema.Types.ObjectId,

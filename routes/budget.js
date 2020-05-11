@@ -13,13 +13,15 @@ router.post('/', create)
 /* callback functions */
 
 function index(req, res, next){
-    budgetController.index(req.params.userId)
+    budgetController.index(req.params.userId, req.headers.authorization)
         .then(user => user ? res.json(user): res.status(400).json({message: "No User Found"}))
         .catch(err => next(err)) 
 }
 
 function show(req, res, next){
-    res.send("This is userID: " + req.params.userId + " This is Budget ID: " + req.params.id)
+    budgetController.show(req.params.id)
+        .then(budget => budget ? res.json(budget) : res.status(400).json({message: "Budget not found"}) )
+        .catch(err => next(err))
 }
 
 function create(req, res, next){

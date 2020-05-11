@@ -1,16 +1,19 @@
 
 const User = require('../models/user');
 const Budget = require('../models/budget');
+const jwt = require('jsonwebtoken')
 
 
 module.exports = {
     index,
-    create
+    create,
+    show
 }
 
-async function index(userId){
+async function index(userId, token){
     const user = await User.findById(userId).populate('budgets')
-    return user
+    if (token === user.token){
+    return user}
 }
 
 
@@ -27,3 +30,9 @@ async function create(budgetParam, userId) {
     return budget
 }
 
+async function show(budgetId){
+    const budget = await Budget.findById(budgetId)
+    if (budget){
+        return budget
+    }
+}
