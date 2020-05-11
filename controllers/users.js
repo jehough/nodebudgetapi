@@ -30,18 +30,22 @@ async function create(userParam) {
 
     await user.save();
     const token = jwt.sign({sub: user.id}, secret);
-    
+    user.token = token
+    await user.save()
     return {
         ...user.toJSON(),
         token
     }
 }
 
-async function authenticate({email, password}){
-    const user = await User.findOne({email}).select(+password);
-
-    if (user && bcrypt.compareSync(password, user.password)){
+async function authenticate(json){
+    
+    const user = await User.findOne({email: json.email});
+    
+    if (user && bcrypt.compareSync(json.password, user.password)){
         const token = jwt.sign({sub: user.id}, secret);
+        user.token = token;
+        await user.save()
         return {
             ...user.toJSON(),
             token

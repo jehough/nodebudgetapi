@@ -10,7 +10,8 @@ const userSchema = new Schema({
     budgets: [{
         type: Schema.Types.ObjectID,
         ref: "Budget"
-    }]
+    }],
+    token: {type: "string", index: {expires: 172800000}}
 })
 
 module.exports = mongoose.model("User", userSchema)
