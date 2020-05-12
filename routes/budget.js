@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
 const budgetController = require('../controllers/budget');
+const categories = require('./category')
 
 /* routes */
 router.get('/', index)
-router.get('/:id', show)
+router.get('/:budgetId', show)
 router.post('/', create)
+router.use('/:budgetId/categories', categories)
 
 
 
@@ -19,7 +21,7 @@ function index(req, res, next){
 }
 
 function show(req, res, next){
-    budgetController.show(req.params.id)
+    budgetController.show(req.params.budgetId)
         .then(budget => budget ? res.json(budget) : res.status(400).json({message: "Budget not found"}) )
         .catch(err => next(err))
 }
