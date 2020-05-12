@@ -17,6 +17,8 @@ async function index(budgetId, token){
 
 
 async function create(categoryParam, budgetId) {
+    console.log(categoryParam)
+    console.log(budgetId)
     const category = new Category(categoryParam);
     const budget = await Budget.findByIdAndUpdate(
         budgetId, 

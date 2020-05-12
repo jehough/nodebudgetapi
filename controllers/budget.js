@@ -31,7 +31,7 @@ async function create(budgetParam, userId) {
 }
 
 async function show(budgetId){
-    const budget = await Budget.findById(budgetId)
+    const budget = await Budget.findById(budgetId).populate("categories")
     if (budget){
         return budget
     }
