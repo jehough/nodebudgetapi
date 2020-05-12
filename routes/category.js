@@ -10,3 +10,6 @@ async function index (req, res, next){
         .then(budget => budget ? res.json(budget): res.status(400).json({message: "No Categories"}))
         .catch(err => next(err))
 }
+
+
+module.exports = router
