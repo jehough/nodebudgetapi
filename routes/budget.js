@@ -7,7 +7,7 @@ const categories = require('./category')
 router.get('/', index)
 router.get('/:budgetId', show)
 router.post('/', create)
-router.use('/:budgetId/categories', categories)
+router.use('/:budgetId/categories, categories')
 
 
 
